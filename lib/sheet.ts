@@ -17,7 +17,10 @@ export async function getFaqCsv(): Promise<string | null> {
   }
 
   try {
-    const res = await fetch(url, { cache: 'no-store' });
+    const res = await fetch(url, {
+      cache: 'no-store',
+      signal: AbortSignal.timeout(4_000),
+    });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const csv = await res.text();
     cachedCsv = csv;

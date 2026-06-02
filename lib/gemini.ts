@@ -29,6 +29,8 @@ const PROMPT_TEMPLATE = `<role>
 {{USER_MESSAGE}}
 </question>`;
 
+const GEMINI_TIMEOUT_MS = 7_000;
+
 export async function askGemini(faqCsv: string | null, userMessage: string): Promise<string> {
   if (!faqCsv) return DEFAULT_REPLY;
 
@@ -36,7 +38,7 @@ export async function askGemini(faqCsv: string | null, userMessage: string): Pro
     .replace('{{FAQ_CSV_CONTENT}}', faqCsv)
     .replace('{{USER_MESSAGE}}', userMessage);
 
-  const response = await ai.models.generateContent({
+  const geminiCall = ai.models.generateContent({
     model: 'gemini-2.5-flash',
     contents: prompt,
     config: {
@@ -44,6 +46,12 @@ export async function askGemini(faqCsv: string | null, userMessage: string): Pro
       maxOutputTokens: 1024,
     },
   });
+
+  const timeout = new Promise<never>((_, reject) =>
+    setTimeout(() => reject(new Error('Gemini timeout')), GEMINI_TIMEOUT_MS)
+  );
+
+  const response = await Promise.race([geminiCall, timeout]);
 
   const finishReason = response.candidates?.[0]?.finishReason;
   const thoughtsTokenCount = response.usageMetadata?.thoughtsTokenCount ?? 0;
