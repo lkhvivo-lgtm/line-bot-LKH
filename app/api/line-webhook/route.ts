@@ -18,8 +18,22 @@ type LineEvent = {
 export async function POST(req: NextRequest) {
   const rawBody = await req.text();
   const signature = req.headers.get('x-line-signature') ?? '';
+  const channelSecret = process.env.LINE_CHANNEL_SECRET;
 
-  if (!validateSignature(rawBody, process.env.LINE_CHANNEL_SECRET!, signature)) {
+  if (!channelSecret) {
+    console.error('[webhook] LINE_CHANNEL_SECRET is not set');
+    return NextResponse.json({ error: 'Server misconfiguration' }, { status: 500 });
+  }
+
+  let signatureValid: boolean;
+  try {
+    signatureValid = validateSignature(rawBody, channelSecret, signature);
+  } catch (err) {
+    console.error('[webhook] validateSignature error:', err);
+    return NextResponse.json({ error: 'Signature check failed' }, { status: 500 });
+  }
+
+  if (!signatureValid) {
     return NextResponse.json({ error: 'Invalid signature' }, { status: 401 });
   }
 
