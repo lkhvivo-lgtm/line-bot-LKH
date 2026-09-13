@@ -9,16 +9,17 @@ import { Services } from '@/components/Services';
 import { SiteFooter } from '@/components/SiteFooter';
 import { SiteHeader } from '@/components/SiteHeader';
 import { StickyCta } from '@/components/StickyCta';
+import { Story } from '@/components/Story';
 import { TrustBar } from '@/components/TrustBar';
 import { SITE } from '@/lib/site';
 
 const DESCRIPTION =
-  'ลิ้มกวงฮวด ร้านวัสดุก่อสร้างครบวงจร อ.เมือง จ.ชุมพร จำหน่ายปูน อิฐ หิน ทราย เหล็ก สี ฝ้า ผนัง ไฟฟ้า ประปา ฮาร์ดแวร์ เครื่องมือช่าง ปลีก–ส่ง ส่งถึงหน้างาน โทร 081-125-1557';
+  'ลิ้มกวงฮวด ร้านวัสดุก่อสร้างครบวงจร อ.เมือง จ.ชุมพร เปิดตั้งแต่ พ.ศ. 2503 จำหน่ายปูน เหล็ก อิฐ ฝ้า กระเบื้อง ประปา สุขภัณฑ์ ประตู สี เครื่องมือช่าง ปลีก–ส่ง ส่งถึงหน้างาน โทร 081-125-1557';
 
 export const metadata: Metadata = {
   // ตั้งชื่อเต็มตรงนี้ ไม่พึ่ง title.template ของ layout
   // เพราะ template ใช้กับ segment ลูกเท่านั้น ส่วน page.tsx อยู่ segment เดียวกับ root layout
-  title: `${SITE.name} · ร้านวัสดุก่อสร้างครบวงจร จ.ชุมพร | ปูน เหล็ก สี ประปา ไฟฟ้า`,
+  title: `${SITE.name} · ร้านวัสดุก่อสร้างครบวงจร จ.ชุมพร | ปูน เหล็ก กระเบื้อง สี สุขภัณฑ์`,
   description: DESCRIPTION,
   keywords: [
     'วัสดุก่อสร้าง ชุมพร',
@@ -69,6 +70,7 @@ export default function HomePage() {
         <Hero />
         <TrustBar />
         <CategoryGrid />
+        <Story />
         <Services />
         <Gallery />
         <ContactMap />

@@ -29,10 +29,17 @@ export function SiteFooter() {
           <div>
             <h3>ติดต่อ</h3>
             <div className="footer__links">
-              <a href={`tel:${SITE.phone.tel}`}>โทร {SITE.phone.display}</a>
-              <a href={`tel:${SITE.phoneAlt.tel}`}>โทร {SITE.phoneAlt.display}</a>
+              {SITE.phones.map((p) => (
+                <a key={p.tel} href={`tel:${p.tel}`}>
+                  {p.display} · {p.label}
+                </a>
+              ))}
               <a href={SITE.lineUrl} target="_blank" rel="noopener noreferrer">
-                แชททาง LINE
+                LINE {SITE.lineId}
+                <span className="sr-only">(เปิดในแท็บใหม่)</span>
+              </a>
+              <a href={SITE.facebookUrl} target="_blank" rel="noopener noreferrer">
+                Facebook: lkhchumphon
                 <span className="sr-only">(เปิดในแท็บใหม่)</span>
               </a>
             </div>
@@ -49,7 +56,8 @@ export function SiteFooter() {
         </div>
 
         <p className="footer__bottom">
-          © {new Date().getFullYear()} {SITE.legalName} · ร้านวัสดุก่อสร้างครบวงจร จังหวัดชุมพร
+          © {new Date().getFullYear()} {SITE.legalName} ({SITE.legalNameEn}) ·
+          ร้านวัสดุก่อสร้างครบวงจร จังหวัดชุมพร · ก่อตั้ง พ.ศ. {SITE.founded.thaiYear}
         </p>
       </div>
     </footer>

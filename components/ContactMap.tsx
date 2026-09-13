@@ -1,6 +1,6 @@
 import { ADDRESS_LINE, MAP_EMBED_URL, SITE } from '@/lib/site';
 import { CtaGroup } from './CtaGroup';
-import { IconClock, IconPhone, IconPin } from './icons';
+import { IconChat, IconClock, IconPhone, IconPin } from './icons';
 
 export function ContactMap() {
   return (
@@ -45,14 +45,47 @@ export function ContactMap() {
               <IconPhone />
               <div>
                 <p className="info__label">โทรศัพท์</p>
-                <div className="phones">
-                  <a className="phone--main" href={`tel:${SITE.phone.tel}`}>
-                    {SITE.phone.display}
-                  </a>
-                  <a className="phone--alt" href={`tel:${SITE.phoneAlt.tel}`}>
-                    {SITE.phoneAlt.display} (สำรอง)
-                  </a>
-                </div>
+                <ul className="phones">
+                  {SITE.phones.map((p, i) => (
+                    <li key={p.tel}>
+                      <a className={i === 0 ? 'phone--main' : 'phone--alt'} href={`tel:${p.tel}`}>
+                        {p.display}
+                        <span className="phones__dept">{p.label}</span>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+
+            <div className="info__block">
+              <IconChat />
+              <div>
+                <p className="info__label">ช่องทางออนไลน์</p>
+                <ul className="phones">
+                  <li>
+                    <a
+                      className="phone--alt"
+                      href={SITE.lineUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      LINE {SITE.lineId}
+                      <span className="sr-only">(เปิดในแท็บใหม่)</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      className="phone--alt"
+                      href={SITE.facebookUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Facebook: lkhchumphon
+                      <span className="sr-only">(เปิดในแท็บใหม่)</span>
+                    </a>
+                  </li>
+                </ul>
               </div>
             </div>
 

@@ -1,5 +1,5 @@
 import { CATEGORIES, FAQS } from '@/lib/catalog';
-import { ADDRESS_LINE, SITE, absoluteUrl } from '@/lib/site';
+import { ADDRESS_LINE, FOUNDING_DATE, SITE, absoluteUrl } from '@/lib/site';
 
 /**
  * escape ตัวอักษรที่ทำให้หลุดออกจาก <script> ได้
@@ -14,11 +14,12 @@ const storeSchema = {
   '@type': ['HardwareStore', 'LocalBusiness'],
   '@id': absoluteUrl('/#store'),
   name: SITE.name,
-  alternateName: SITE.nameEn,
+  alternateName: [SITE.nameEn, SITE.legalNameEn],
   legalName: SITE.legalName,
   slogan: SITE.tagline,
   description:
-    'ร้านวัสดุก่อสร้างครบวงจรในจังหวัดชุมพร จำหน่ายปูน อิฐ หิน ทราย เหล็ก สี ฝ้า ผนัง อุปกรณ์ไฟฟ้า ประปา ฮาร์ดแวร์ และเครื่องมือช่าง ทั้งปลีกและส่ง พร้อมบริการจัดส่งถึงหน้างาน',
+    'ร้านวัสดุก่อสร้างครบวงจรในจังหวัดชุมพร ก่อตั้ง พ.ศ. 2503 จำหน่ายปูนซิเมนต์ เหล็กโครงสร้าง อิฐ ฝ้าเพดาน กระเบื้อง ท่อพีวีซี สุขภัณฑ์ ประตู–หน้าต่าง สีและเคมีภัณฑ์ และเครื่องมือช่าง ทั้งปลีกและส่ง พร้อมบริการจัดส่งถึงหน้างาน',
+  foundingDate: FOUNDING_DATE,
   url: absoluteUrl('/'),
   logo: absoluteUrl('/images/logo-lkh.jpg'),
   image: [
@@ -27,20 +28,13 @@ const storeSchema = {
     absoluteUrl('/images/plumbing-pvc-scg.jpg'),
   ],
   telephone: SITE.phone.tel,
-  contactPoint: [
-    {
-      '@type': 'ContactPoint',
-      telephone: SITE.phone.tel,
-      contactType: 'sales',
-      availableLanguage: 'th',
-    },
-    {
-      '@type': 'ContactPoint',
-      telephone: SITE.phoneAlt.tel,
-      contactType: 'sales',
-      availableLanguage: 'th',
-    },
-  ],
+  contactPoint: SITE.phones.map((p) => ({
+    '@type': 'ContactPoint',
+    telephone: p.tel,
+    name: p.label,
+    contactType: p.label.startsWith('ฝ่ายขาย') ? 'sales' : 'customer service',
+    availableLanguage: 'th',
+  })),
   address: {
     '@type': 'PostalAddress',
     streetAddress: SITE.address.street,
@@ -61,7 +55,7 @@ const storeSchema = {
     },
   ],
   areaServed: [{ '@type': 'AdministrativeArea', name: 'จังหวัดชุมพร' }],
-  sameAs: [SITE.lineUrl],
+  sameAs: [SITE.facebookUrl, SITE.lineUrl],
   priceRange: '฿฿',
   currenciesAccepted: 'THB',
   paymentAccepted: 'เงินสด, โอนเงิน',

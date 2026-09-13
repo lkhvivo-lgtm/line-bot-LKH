@@ -24,7 +24,6 @@ export function CategoryGrid() {
                     <Icon />
                   </span>
                   <h3>{cat.name}</h3>
-                  <p className="card__blurb">{cat.blurb}</p>
                   <ul className="card__items">
                     {cat.items.map((item) => (
                       <li key={item}>{item}</li>

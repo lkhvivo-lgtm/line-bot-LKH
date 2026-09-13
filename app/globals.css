@@ -559,10 +559,6 @@ p {
   height: 22px;
 }
 
-.card__blurb {
-  color: var(--muted);
-  font-size: 0.94rem;
-}
 
 .card__items {
   display: flex;
@@ -589,6 +585,51 @@ p {
   height: 6px;
   border-radius: 50%;
   background: var(--gold);
+}
+
+/* ---------- ไทม์ไลน์ประวัติร้าน ---------- */
+
+.timeline {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: clamp(20px, 3vw, 32px);
+  counter-reset: milestone;
+}
+
+.timeline__item {
+  position: relative;
+  padding-top: 26px;
+  border-top: 2px solid var(--line);
+}
+
+/* จุดหมุดบนเส้นเวลา */
+.timeline__item::before {
+  content: '';
+  position: absolute;
+  top: -7px;
+  left: 0;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--red);
+  box-shadow: 0 0 0 4px #fff;
+}
+
+.timeline__year {
+  font-weight: 700;
+  font-size: 0.86rem;
+  color: var(--red);
+  margin-bottom: 6px;
+}
+
+.timeline__title {
+  font-size: 1.06rem;
+  margin-bottom: 8px;
+}
+
+.timeline__body {
+  color: var(--muted);
+  font-size: 0.94rem;
 }
 
 /* ---------- แบรนด์ ---------- */
@@ -782,6 +823,15 @@ p {
 .phones .phone--alt {
   font-size: 1.05rem;
   color: var(--muted);
+}
+
+/* ชื่อแผนกต่อท้ายเบอร์ — เล็กและเบากว่า ไม่แย่งสายตาไปจากตัวเลข */
+.phones__dept {
+  margin-left: 10px;
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--muted);
+  white-space: nowrap;
 }
 
 .map {
