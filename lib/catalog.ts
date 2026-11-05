@@ -148,6 +148,70 @@ export const BRANDS = [
   'Safe',
 ] as const;
 
+/* ---------- สินค้าแนะนำ: รางน้ำฝนไวนิล ---------- */
+
+export const GUTTER = {
+  brand: 'ฐาพล (THAPHOL)',
+  material: 'uPVC และ ABS เกรดพรีเมี่ยม',
+  lengths: '3 เมตร และ 4 เมตร',
+} as const;
+
+export const GUTTER_BENEFITS = [
+  { title: 'ไม่เป็นสนิม', body: 'เนื้อ uPVC ไม่ใช่โลหะ จึงไม่ขึ้นสนิมแม้โดนแดดโดนฝนตลอดปี' },
+  { title: 'ไม่ผุกร่อน', body: 'ไม่ลอก ไม่กร่อนตามขอบราง แบบที่รางโลหะเป็นเมื่อใช้ไปนาน ๆ' },
+  { title: 'เสียงไม่ดัง', body: 'ฝนตกหนักก็ไม่เกิดเสียงกระหึ่มเหมือนรางสังกะสีหรือรางเหล็ก' },
+  { title: 'ใช้งานได้ยาวนาน', body: 'ผลิตด้วยกระบวนการที่ได้มาตรฐาน และเป็นวัสดุที่รีไซเคิลได้' },
+] as const;
+
+/** หัวตารางเปรียบเทียบวัสดุรางน้ำ */
+export const GUTTER_COMPARE_ATTRS = [
+  'ทนทาน',
+  'สวยงาม',
+  'ไม่ขึ้นสนิม',
+  'ราคาไม่แพง',
+  'ติดตั้งง่าย',
+] as const;
+
+export type GutterCompareRow = {
+  readonly material: string;
+  /** ลำดับตรงกับ GUTTER_COMPARE_ATTRS */
+  readonly has: readonly boolean[];
+  readonly highlight?: boolean;
+};
+
+/** ข้อมูลเปรียบเทียบคุณสมบัติวัสดุจากผู้ผลิต */
+export const GUTTER_COMPARE: readonly GutterCompareRow[] = [
+  { material: 'สังกะสี', has: [false, false, false, true, true] },
+  { material: 'สแตนเลส', has: [true, false, true, false, false] },
+  { material: 'เหล็กชุบสี', has: [true, true, false, false, false] },
+  { material: 'ไฟเบอร์กลาส', has: [true, true, true, false, false] },
+  { material: 'ไวนิล', has: [true, true, true, true, true], highlight: true },
+];
+
+/** สาเหตุที่น้ำฝนล้นราง */
+export const GUTTER_OVERFLOW_CAUSES = [
+  'รางน้ำฝนมีขนาดเล็กเกินไป',
+  'มีเศษดิน เศษใบไม้อุดตัน',
+  'ติดตั้งรางน้ำฝนไม่ถูกต้อง',
+  'รางน้ำฝนชำรุด แตกหัก',
+] as const;
+
+/** อุปกรณ์ในชุดรางน้ำฝน */
+export const GUTTER_PARTS = [
+  'รางน้ำฝน 3 และ 4 เมตร',
+  'ฝาปิดราง',
+  'ขอรับราง',
+  'ตัวต่อรางน้ำฝน',
+  'ตัวต่อมุมนอก',
+  'ตัวต่อมุมใน',
+  'ข้องอ 90 องศา',
+  'ข้องอ 45 องศา',
+  'ตัวต่อน้ำลง 3 นิ้ว',
+  'ข้อต่อตรงท่อ',
+  'ท่อกลม',
+  'คลิปรัดอุปกรณ์ท่อ',
+] as const;
+
 export type Milestone = {
   readonly year: string;
   readonly title: string;

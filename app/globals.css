@@ -70,7 +70,10 @@ body {
   color: var(--ink);
   background: var(--bg);
   -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
+  /* ใช้ clip ไม่ใช่ hidden — hidden บน body จะถูกส่งต่อไปเป็น overflow ของ viewport
+     แล้ว body เองกลายเป็น visible ทำให้ของที่กว้างเกินหลุดออกไปดันหน้าได้
+     clip แค่ตัดทิ้งตรงนั้น ไม่สร้าง scroll container และไม่ทำให้ header sticky เสีย */
+  overflow-x: clip;
 }
 
 img,
@@ -585,6 +588,267 @@ p {
   height: 6px;
   border-radius: 50%;
   background: var(--gold);
+}
+
+/* ---------- สินค้าแนะนำ: รางน้ำไวนิล ---------- */
+
+.gutter__split {
+  display: grid;
+  gap: clamp(22px, 3.5vw, 44px);
+  align-items: start;
+  /* subhead ตัวแรกในคอลัมน์ถูกตัด margin-top ไป ระยะห่างจึงมาอยู่ที่ตัว split แทน */
+  margin-top: clamp(36px, 4.5vw, 56px);
+}
+
+@media (min-width: 900px) {
+  .gutter__split {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.gutter__benefits {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: clamp(18px, 2.4vw, 26px);
+}
+
+.gutter__benefits li {
+  padding: 20px 22px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--gold);
+  border-radius: var(--r-md);
+  box-shadow: var(--shadow-sm);
+}
+
+.gutter__benefits h3 {
+  font-size: 1.05rem;
+  margin-bottom: 4px;
+}
+
+.gutter__benefits p {
+  color: var(--muted);
+  font-size: 0.94rem;
+}
+
+.gutter__subhead {
+  margin-top: clamp(40px, 5vw, 64px);
+  margin-bottom: 18px;
+}
+
+/* subhead ตัวแรกในคอลัมน์ของ split ไม่ต้องเว้นบนซ้ำ */
+.gutter__split > div > .gutter__subhead:first-child {
+  margin-top: 0;
+}
+
+.gutter__parts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 8px 20px;
+  font-size: 0.95rem;
+}
+
+.gutter__parts li {
+  position: relative;
+  padding-left: 18px;
+}
+
+.gutter__parts li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.72em;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--gold);
+}
+
+.gutter__causes {
+  display: grid;
+  gap: 10px;
+  counter-reset: cause;
+  font-size: 0.97rem;
+}
+
+.gutter__causes li {
+  display: flex;
+  gap: 12px;
+  align-items: baseline;
+  counter-increment: cause;
+}
+
+.gutter__causes li::before {
+  content: counter(cause);
+  flex: none;
+  width: 26px;
+  height: 26px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--navy);
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 700;
+  /* ตัวเลขเป็นละตินล้วน จึงจัดกึ่งกลางด้วย line-height ได้ */
+  line-height: 1;
+}
+
+.gutter__note {
+  margin-top: 14px;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.gutter__split .cta-group {
+  margin-top: 22px;
+}
+
+/* ตารางเปรียบเทียบวัสดุ */
+
+.table-scroll {
+  overflow-x: auto;
+  /* ปัดตารางแล้วไม่ลากทั้งหน้าไปด้วย */
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+  border-radius: var(--r-lg);
+  border: 1px solid var(--line);
+  background: #fff;
+}
+
+.compare {
+  width: 100%;
+  min-width: 560px;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.compare th,
+.compare td {
+  padding: 14px 12px;
+  text-align: center;
+  border-bottom: 1px solid var(--line);
+}
+
+.compare thead th {
+  background: var(--navy);
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.compare tbody th {
+  text-align: left;
+  white-space: nowrap;
+  color: var(--navy);
+  font-weight: 600;
+}
+
+.compare tbody tr:last-child th,
+.compare tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.compare .tick {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--navy);
+}
+
+.compare .tick--no {
+  color: #c2c8d2;
+  font-weight: 400;
+}
+
+/* แถวไวนิล — คำตอบของหน้านี้ จึงเน้นให้เห็นชัด */
+.compare tr.is-best th,
+.compare tr.is-best td {
+  background: rgb(0 48 135 / 0.06);
+}
+
+.compare tr.is-best th {
+  font-size: 1.05rem;
+}
+
+.compare tr.is-best .tick {
+  color: var(--red);
+  font-size: 1.3rem;
+}
+
+/* บนมือถือ ตาราง 6 คอลัมน์อ่านไม่ออกแม้จะเลื่อนได้
+   จึงพับเป็นการ์ดต่อวัสดุ หัวข้อคุณสมบัติมาจาก data-label
+   โครงสร้าง <table> ยังอยู่ครบ screen reader จึงอ่านเป็นตารางเหมือนเดิม */
+@media (max-width: 699px) {
+  .table-scroll {
+    overflow-x: visible;
+    border: 0;
+    background: transparent;
+    border-radius: 0;
+  }
+
+  .compare {
+    min-width: 0;
+    display: block;
+  }
+
+  .compare thead {
+    display: none;
+  }
+
+  .compare tbody,
+  .compare tbody tr,
+  .compare tbody th,
+  .compare tbody td {
+    display: block;
+  }
+
+  .compare tbody tr {
+    margin-bottom: 14px;
+    border: 1px solid var(--line);
+    border-radius: var(--r-md);
+    overflow: hidden;
+    background: #fff;
+  }
+
+  .compare tbody tr:last-child {
+    margin-bottom: 0;
+  }
+
+  .compare tbody th {
+    padding: 12px 16px;
+    background: var(--navy);
+    color: #fff;
+    font-size: 1rem;
+    border-bottom: 0;
+  }
+
+  .compare tbody td {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 10px 16px;
+    text-align: left;
+  }
+
+  .compare tbody td::before {
+    content: attr(data-label);
+    color: var(--muted);
+    font-size: 0.92rem;
+  }
+
+  .compare tr.is-best th {
+    background: var(--red);
+  }
+
+  .compare tr.is-best th,
+  .compare tr.is-best td {
+    background-color: transparent;
+  }
+
+  .compare tr.is-best th {
+    background-color: var(--red);
+  }
 }
 
 /* ---------- ไทม์ไลน์ประวัติร้าน ---------- */

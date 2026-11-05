@@ -3,6 +3,7 @@ import { CategoryGrid } from '@/components/CategoryGrid';
 import { ContactMap } from '@/components/ContactMap';
 import { Faq } from '@/components/Faq';
 import { Gallery } from '@/components/Gallery';
+import { Gutter } from '@/components/Gutter';
 import { Hero } from '@/components/Hero';
 import { JsonLd } from '@/components/JsonLd';
 import { Services } from '@/components/Services';
@@ -70,6 +71,7 @@ export default function HomePage() {
         <Hero />
         <TrustBar />
         <CategoryGrid />
+        <Gutter />
         <Story />
         <Services />
         <Gallery />

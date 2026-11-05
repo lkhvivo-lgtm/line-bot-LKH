@@ -4,6 +4,7 @@ import { IconPhone } from './icons';
 
 const NAV = [
   { href: '#products', label: 'หมวดสินค้า' },
+  { href: '#gutter', label: 'รางน้ำไวนิล' },
   { href: '#story', label: 'ประวัติร้าน' },
   { href: '#services', label: 'บริการ' },
   { href: '#gallery', label: 'ภายในร้าน' },
